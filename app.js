@@ -5,8 +5,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
+const csrf = require('csurf');
 
 const sql = require('./data/database.js');
+const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
 env.config();
 
 const authRoutes = require('./routes/auth.routes');
@@ -16,6 +18,9 @@ const app = express();
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+app.use(csrf());
+app.use(addCsrfTokenMiddleware);
 
 sql.connect();
 
