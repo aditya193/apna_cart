@@ -1,22 +1,15 @@
-const mysql = require('mysql');
+var mysql = require('mysql');
 
-module.exports = class Mysql {
-    static connect() {
-        // establish connection
-        const db = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'system',
-            database: 'apna_cart',
-        });
+var conn = mysql.createConnection({
+    host: 'localhost', // assign your host name
+    user: 'root', //  assign your database username
+    password: 'system',
+    database: 'apna_cart' // assign database Name
+});
 
-        // connect to database
-        db.connect((err) => {
-            if (err) {
-                throw err;
-            }
-            console.log('Mysql Connected');
-        });
-        return db;
-    }
-};
+conn.connect(function (err) {
+    if (err) throw err;
+    console.log('Database is connected successfully !');
+});
+
+module.exports = conn;

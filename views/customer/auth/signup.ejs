@@ -7,19 +7,20 @@
     <%- include('../includes/header') %>
     <main>
         <h1>Create New Account</h1>
+        <p><%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
         <form action="/signup" method="POST">
-            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+            <!-- <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>"> -->
             <p>
                 <label for="email">E-Mail</label>
                 <input type="email" id="email" name="email" required>
             </p>
             <p>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" minlength="8" required>
+                <input type="password" id="password" name="password" minlength="4" required>
             </p>
             <p>
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" minlength="8" required>
+                <input type="password" id="confirm_password" name="confirm_password" minlength="4" required>
             </p>
             <hr>
             <p>
