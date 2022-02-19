@@ -5,7 +5,6 @@ var createError = require('http-errors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
 const session = require('express-session');
 // const csrf = require('csurf');
 
@@ -14,6 +13,8 @@ const sql = require('./data/database.js');
 env.config();
 
 const authRoutes = require('./routes/auth.routes');
+const productsRoutes = require('./routes/products.routes');
+const baseRoutes = require('./routes/base.routes');
 
 const app = express();
 
@@ -42,17 +43,9 @@ app.use(
     })
 );
 
-app.use(flash());
-
-// Global variables
-// app.use((req, res, next) => {
-//     res.locals.success_msg = req.flash('success_msg');
-//     res.locals.error_msg = req.flash('error_msg');
-//     res.locals.error = req.flash('error');
-//     next();
-// });
-
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(productsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
