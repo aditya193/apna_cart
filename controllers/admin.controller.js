@@ -85,7 +85,7 @@ function deleteProduct(req,res){
         res.render('admin/product/all-products', {alertMsg:"No Record Found!!"});
         else{
             console.log(productId);
-       return res.render('admin/product/all-products', {alertMsg:"Record Successfully deleted"});
+        res.render('admin/product/all-products', {alertMsg:"Record Successfully deleted"});
         }
     });
 }
