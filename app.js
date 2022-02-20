@@ -15,6 +15,7 @@ env.config();
 const authRoutes = require('./routes/auth.routes');
 const productsRoutes = require('./routes/products.routes');
 const baseRoutes = require('./routes/base.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productsRoutes);
+app.use(adminRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

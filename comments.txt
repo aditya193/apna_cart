@@ -1,0 +1,44 @@
+Initiate the Project:
+$ npm init -y
+-y will ans yes(default) to all the question
+
+Install Express:
+$ npm install express
+It will create package-lock.json file
+
+Install nodemon:
+$ npm install --save-dev nodemon
+It is used to restart the server automatically whenever we make changes to our code.
+
+inside package.json:
+under scripts, define "start" key and its value is "nodemon app.js"
+In Terminal $ npm start
+Our server will be start running
+
+mailgun_password: $08$cW1l8hUM/tyRdkr47mxNAuMC8OBMnDknfYst6GqWeVtLlm7cviqIG
+
+shop-email:
+email:apnacart23@gmail.com
+password:Apnacart2022!
+
+storing session in databse
+
+while Login check if user is already logged in with the help of sessions
+
+npm install --save multer
+
+npm install uuid
+
+creating products tables
+CREATE TABLE `online-shop`.`products` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(45) NOT NULL,
+    `image` BLOB,
+    `path` TEXT NOT NULL,
+    `summary` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `price` INT NOT NULL,
+    `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`));
+
+    <img src = "data:image/png;base64,' . base64_encode($row['product_image']) . '" width = "50px" height = "50px"/>
