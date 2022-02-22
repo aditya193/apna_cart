@@ -1,9 +1,11 @@
 const mysql = require('mysql');
+const {
+    NULL
+} = require('mysql/lib/protocol/constants/types');
 const db = require('../data/database');
 
 
-// 1. ADMIN
-// 1.1 Login
+// Customer Login
 exports.getLogin = (req, res, next) => {
     res.render('customer/auth/login');
 };
@@ -16,13 +18,12 @@ exports.login = async (req, res, next) => {
         if (err) throw err
         // && bcrypt.compare(password, data[0].password)
         if (data.length > 0) {
-            req.session.loggedinUser = true;
             req.session.emailAddress = emailAddress;
-            req.session.isCustomer = false;
-            req.session.isAdmin = true;
+            req.session.isAuth = true;
+            req.session.isAdmin = false;
+            req.session.save();
             console.log("congrats logged in!");
             res.redirect('/');
-            // res.redirect('/dashboard');
         } else {
             res.render('customer/auth/login', {
                 alertMsg: "Your Email Address or password is wrong"
@@ -31,8 +32,7 @@ exports.login = async (req, res, next) => {
     })
 };
 
-// 1.2 Register
-// ADMIN REGISTER ==> To be commented
+// Customer Register
 
 exports.getSignup = (req, res, next) => {
     res.render('customer/auth/signup');
@@ -68,15 +68,18 @@ exports.signup = async (req, res, next) => {
         }
 
         res.render('customer/auth/signup', {
-            alertMsg: msg
+            alertMsg: "your account has been successfully created!"
         });
     });
 };
 
 
-// logout
+// customer logout
 
 exports.logout = (req, res) => {
-    // authUtil.destroyUserAuthSession(req);
+    // req.session.emailAddress = null;
+    // req.session.isAuth = false;
+    // req.session.isAdmin = false;
+    req.session.destroy();
     res.redirect('/login');
 };
