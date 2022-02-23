@@ -2,22 +2,23 @@
 <link rel="stylesheet" href="/styles/forms.css">
 <script src="/scripts/image-preview.js" defer></script>
 </head>
+
 <body>
   <%- include('../../shared/includes/header') %>
   <main>
     <h1>Add new Product</h1>
     <form action="/admin/products" method="POST" enctype="multipart/form-data">
-    <!--    <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data"></form> -->
+      <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data"></form>
       <p>
         <label for="title">Title</label>
         <input type="text" id="title" name="title" required>
       </p>
       <div id="image-upload-control">
-      <p>
-        <label for="image">Image</label>
-        <input type="file" id="image" name="image" accept="image/png,image/jpg">
-      </p>
-      <img src="" alt="Selected image">
+        <p>
+          <label for="image">Image</label>
+          <input type="file" id="image" name="image" accept="image/png,image/jpg">
+        </p>
+        <img src="" alt="Selected image">
       </div>
 
       <p>
@@ -41,4 +42,4 @@
       </p>
     </form>
   </main>
-<%- include('../../shared/includes/footer') %>
+  <%- include('../../shared/includes/footer') %>

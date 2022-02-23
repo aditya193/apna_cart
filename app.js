@@ -6,10 +6,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-// const csrf = require('csurf');
+const csrf = require('csurf');
 const sql = require('./data/database.js');
 const checkAuthStatusMiddleware = require('./middlewares/check-auth');
-// const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
+const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
 const authRoutes = require('./routes/auth.routes');
 const productsRoutes = require('./routes/products.routes');
 const baseRoutes = require('./routes/base.routes');
@@ -41,8 +41,9 @@ app.use(
     })
 );
 
-// app.use(csrf());
-// app.use(addCsrfTokenMiddleware);
+app.use(csrf());
+app.use(addCsrfTokenMiddleware);
+
 app.use(checkAuthStatusMiddleware);
 
 app.use(baseRoutes);
@@ -67,5 +68,3 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(3000);
-
-// module.exports = app;

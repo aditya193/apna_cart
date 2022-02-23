@@ -1,12 +1,13 @@
 <%- include('../../shared/includes/head', { pageTitle: 'Update Product' }) %>
 <link rel="stylesheet" href="/styles/forms.css">
 </head>
+
 <body>
   <%- include('../../shared/includes/header') %>
   <main>
     <h1>Update new Product</h1>
     <form action="/admin/products/<%= product.id %>" method="POST" enctype="multipart/form-data">
-    <!--    <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data"></form> -->
+      <form action="/admin/products?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data"></form>
       <p>
         <label for="title">Title</label>
         <input type="text" id="title" name="title" value="<%= product.title %>" required>
@@ -37,4 +38,4 @@
       </p>
     </form>
   </main>
-<%- include('../../shared/includes/footer') %>
+  <%- include('../../shared/includes/footer') %>
