@@ -54,12 +54,12 @@ function getNewProduct(req, res) {
 }
 
 function createNewProduct(req, res) {
-    // console.log(req.body);
-    // console.log(req.file.path);
+    const imageUrl = "/products/assets/images/" + req.file.filename;
+    // console.log()
     inputData = {
         title: req.body.title,
         image: req.file,
-        path: req.file.path,
+        path: imageUrl,
         summary: req.body.summary,
         description: req.body.description,
         price: req.body.price
@@ -69,7 +69,6 @@ function createNewProduct(req, res) {
         if (err) throw err;
     });
     res.redirect('/admin/products');
-
 }
 
 function getUpdateProduct(req, res) {
@@ -125,9 +124,11 @@ function deleteProduct(req, res) {
                 alertMsg: "No Record Found!!"
             });
         else {
-            console.log(productId);
-            res.render('admin/product/all-products', {
-                alertMsg: "Record Successfully deleted"
+            // res.render('admin/product/all-products', {
+            //     alertMsg: "Record Successfully deleted"
+            // });
+            res.json({
+                message: 'Deleted product!'
             });
         }
     });

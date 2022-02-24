@@ -68,7 +68,7 @@ exports.signup = async (req, res, next) => {
         }
 
         res.render('customer/auth/signup', {
-            alertMsg: "your account has been successfully created!"
+            alertMsg: msg
         });
     });
 };
