@@ -10,6 +10,8 @@ const csrf = require('csurf');
 const sql = require('./data/database.js');
 const checkAuthStatusMiddleware = require('./middlewares/check-auth');
 const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
+const errorHandlerMiddleware = require('./middlewares/error-handler');
+const protectRoutesMiddleware = require('./middlewares/protect-routes');
 const authRoutes = require('./routes/auth.routes');
 const productsRoutes = require('./routes/products.routes');
 const baseRoutes = require('./routes/base.routes');
@@ -43,28 +45,13 @@ app.use(
 
 app.use(csrf());
 app.use(addCsrfTokenMiddleware);
-
 app.use(checkAuthStatusMiddleware);
+app.use(errorHandlerMiddleware);
+app.use(protectRoutesMiddleware);
 
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productsRoutes);
 app.use(adminRoutes);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    // res.render('error');
-});
 
 app.listen(3000);

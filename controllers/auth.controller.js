@@ -1,7 +1,4 @@
 const mysql = require('mysql');
-const {
-    NULL
-} = require('mysql/lib/protocol/constants/types');
 const db = require('../data/database');
 
 

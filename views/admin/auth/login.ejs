@@ -8,7 +8,7 @@
     <main>
         <h1>Admin Login</h1>
         <p><%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
-        <form action="/admin/login" method="POST">
+        <form action="/loginAdmin" method="POST">
             <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
             <p>
                 <label for="email">E-Mail</label>

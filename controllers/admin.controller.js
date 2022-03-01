@@ -72,43 +72,50 @@ function createNewProduct(req, res) {
 }
 
 function getUpdateProduct(req, res) {
-    // console.log(3);
+    console.log(3);
     productId = req.params.id;
     var sql = 'SELECT * FROM products WHERE id = ? ';
     db.query(sql, productId, function (err, data, fields) {
         if (err) throw err;
-        else if (!data)
-            res.render('admin/product/all-products', alertMsg = "No Record Found!!");
-        else {
-            // console.log(data);
+        else if (data.length > 0) {
             res.render('admin/product/update-product', {
-                product: data
+                product: data[0]
             });
+        } else {
+            res.render('shared/404');
         }
     });
 }
 
 
 function updateProduct(req, res) {
-    //  console.log(4);
-    productId = req.params.id;
+    const imageUrl = "/products/assets/images/" + req.file.filename;
+
+    inputData = {
+        title: req.body.title,
+        image: req.file,
+        path: imageUrl,
+        summary: req.body.summary,
+        description: req.body.description,
+        price: req.body.price
+    }
+
+    const productId = req.params.id;
+    console.log(productId);
+
     var sql = 'SELECT * FROM products WHERE id = ? ';
     db.query(sql, productId, function (err, data, fields) {
         if (err) throw err;
-        else if (!data)
-            res.render('admin/product/all-products', {
-                alertMsg: "No Record Found!!"
+        else if (data.length > 0) {
+            const sql2 = "UPDATE products SET ? WHERE id = ?";
+
+            db.query(sql2, [inputData, productId], function (err, data) {
+                if (err) throw err;
             });
-        else {
-            data[0].title = req.body.title;
-            data[0].summary = req.body.summary;
-            data[0].description = req.body.description;
-            data[0].price = req.body.price;
-            data[0].image = req.file;
-            data[0].path = req.file.path;
-            res.render('admin/product/all-product', {
-                alertMsg: "record successfully updated"
-            });
+
+            res.redirect('/admin/products');
+        } else {
+            res.render('shared/404');
         }
     });
 }
@@ -118,18 +125,22 @@ function deleteProduct(req, res) {
     productId = req.params.id;
     var sql = 'DELETE FROM products WHERE id = ? ';
     db.query(sql, productId, function (err, data, fields) {
+        console.log(data);
         if (err) throw err;
-        else if (!data)
-            res.render('admin/product/all-products', {
-                alertMsg: "No Record Found!!"
-            });
-        else {
-            // res.render('admin/product/all-products', {
-            //     alertMsg: "Record Successfully deleted"
-            // });
+        else if (data.affectedRows > 0) {
             res.json({
                 message: 'Deleted product!'
             });
+        } else {
+            // res.render('admin/product/all-products', {
+            //     alertMsg: "Record Successfully deleted"
+            // });
+
+            // res.render('admin/product/all-products', {
+            //     alertMsg: "No Record Found!!"
+            // });
+
+            res.redirect("/admin/products");
         }
     });
 }

@@ -6,9 +6,9 @@ const imageUploadMiddleware = require('../middlewares/image-upload');
 
 const router = express.Router();
 
-router.get('/admin/login', adminController.getLogin);
+router.get('/loginAdmin', adminController.getLogin);
 
-router.post('/admin/login', adminController.login);
+router.post('/loginAdmin', adminController.login);
 
 router.post('/logout', adminController.logout);
 
