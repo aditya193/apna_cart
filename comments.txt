@@ -51,3 +51,12 @@ CREATE TABLE `online-shop`.`products` (
   `emailAddress` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`adminId`));
+
+  CREATE TABLE `online-shop`.`orders` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `quantity` INT NOT NULL,
+    `is_pending` TINYINT NOT NULL,
+    `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`));
