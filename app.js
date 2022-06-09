@@ -18,6 +18,7 @@ const productsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
 const adminRoutes = require("./routes/admin.routes");
 const cartRoutes = require("./routes/cart.routes");
+const orderRoutes = require("./routes/orders.routes");
 
 const app = express();
 env.config();
@@ -28,24 +29,24 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use("/products/assets", express.static("product-data"));
 app.use(
-    bodyParser.urlencoded({
-        extended: false,
-    })
+  bodyParser.urlencoded({
+    extended: false,
+  })
 );
 app.use(express.json());
 
 app.use(cookieParser());
 
 app.use(
-    session({
-        // key: "userId",
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            maxAge: 2 * 24 * 60 * 60 * 1000,
-        },
-    })
+  session({
+    // key: "userId",
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 2 * 24 * 60 * 60 * 1000,
+    },
+  })
 );
 
 app.use(csrf());
@@ -61,5 +62,6 @@ app.use(authRoutes);
 app.use(productsRoutes);
 app.use(adminRoutes);
 app.use(cartRoutes);
+app.use(orderRoutes);
 
 app.listen(3000);
