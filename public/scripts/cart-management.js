@@ -1,5 +1,7 @@
-const addToCartButtonElement = document.querySelector('#product-details button');
-const cartBadgeElement = document.querySelector('.nav-items .badge');
+const addToCartButtonElement = document.querySelector(
+    "#product-details button"
+);
+const cartBadgeElements = document.querySelectorAll(".nav-items .badge");
 
 async function addToCart() {
     const productId = addToCartButtonElement.dataset.productid;
@@ -7,24 +9,23 @@ async function addToCart() {
 
     let response;
     try {
-        response = await fetch('/cart/items', {
-            method: 'POST',
+        response = await fetch("/cart/items", {
+            method: "POST",
             body: JSON.stringify({
                 productId: productId,
-                _csrf: csrfToken
+                _csrf: csrfToken,
             }),
             headers: {
-                'Content-Type': 'application/json'
-            }
+                "Content-Type": "application/json",
+            },
         });
-
     } catch (error) {
-        alert('Something went wrong!');
+        alert("Something went wrong!");
         return;
     }
 
     if (!response.ok) {
-        alert('Something went wrong!');
+        alert("Something went wrong!");
         return;
     }
 
@@ -32,7 +33,9 @@ async function addToCart() {
 
     const newTotalQuantity = responseData.newTotalItems;
 
-    cartBadgeElement.textContent = newTotalQuantity;
+    for (const cartBadgeElement of cartBadgeElements) {
+        cartBadgeElement.textContent = newTotalQuantity;
+    }
 }
 
-addToCartButtonElement.addEventListener('click', addToCart);
+addToCartButtonElement.addEventListener("click", addToCart);
