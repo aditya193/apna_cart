@@ -2,185 +2,189 @@ const mysql = require("mysql");
 const db = require("../data/database");
 
 function getLogin(req, res, next) {
-    res.render("admin/auth/login");
+  res.render("admin/auth/login");
 }
 
 function login(req, res, next) {
-    var emailAddress = req.body.email;
-    var password = req.body.password;
-    var sql = "SELECT * FROM admin WHERE emailAddress = ? and password = ?";
-    db.query(sql, [emailAddress, password], function (err, data, fields) {
-        if (err) throw err;
-        // && bcrypt.compare(password, data[0].password)
-        if (data.length > 0) {
-            req.session.emailAddress = emailAddress;
-            req.session.isAuth = false;
-            req.session.isAdmin = true;
-            console.log("congrats logged in as admin!");
-            res.redirect("/admin/products");
-        } else {
-            res.render("admin/auth/login", {
-                alertMsg: "Your Email Address or password is wrong",
-            });
-        }
-    });
+  var emailAddress = req.body.email;
+  var password = req.body.password;
+  var sql = "SELECT * FROM admin WHERE emailAddress = ? and password = ?";
+  db.query(sql, [emailAddress, password], function (err, data, fields) {
+    if (err) throw err;
+    // && bcrypt.compare(password, data[0].password)
+    if (data.length > 0) {
+      req.session.emailAddress = emailAddress;
+      req.session.isAuth = false;
+      req.session.isAdmin = true;
+      req.session.admin_id = data[0].adminId;
+      console.log("congrats logged in as admin!");
+      res.redirect("/admin/products");
+    } else {
+      res.render("admin/auth/login", {
+        alertMsg: "Your Email Address or password is wrong",
+      });
+    }
+  });
 }
 
 function logout(req, res) {
-    // req.session.emailAddress = null;
-    // req.session.isAuth = false;
-    // req.session.isAdmin = false;
-    req.session.destroy();
-    res.redirect("/login");
+  // req.session.emailAddress = null;
+  // req.session.isAuth = false;
+  // req.session.isAdmin = false;
+  req.session.destroy();
+  res.redirect("/login");
 }
 
 function getProduct(req, res) {
-    var sql = "SELECT * FROM PRODUCTS";
+  var admin_id = res.locals.admin_id;
+  var sql = "SELECT * FROM PRODUCTS WHERE admin_id=?";
 
-    db.query(sql, function (err, data) {
-        if (err) throw err;
-        else {
-            // console.log(data)
-            res.render("admin/product/all-products", {
-                products: data,
-            });
-        }
-    });
+  db.query(sql, [admin_id], function (err, data) {
+    if (err) throw err;
+    else {
+      // console.log(data)
+      res.render("admin/product/all-products", {
+        products: data,
+      });
+    }
+  });
 }
 
 function getNewProduct(req, res) {
-    res.render("admin/product/new-product");
+  res.render("admin/product/new-product");
 }
 
 function createNewProduct(req, res) {
-    const imageUrl = "/products/assets/images/" + req.file.filename;
-    // console.log()
-    inputData = {
-        title: req.body.title,
-        image: req.file,
-        path: imageUrl,
-        summary: req.body.summary,
-        description: req.body.description,
-        price: req.body.price,
-    };
-    var sql = "INSERT INTO products SET ?";
-    db.query(sql, inputData, function (err, data) {
-        if (err) throw err;
-    });
-    res.redirect("/admin/products");
+  const imageUrl = "/products/assets/images/" + req.file.filename;
+  // console.log()
+  inputData = {
+    admin_id: res.locals.admin_id,
+    title: req.body.title,
+    image: req.file,
+    path: imageUrl,
+    summary: req.body.summary,
+    description: req.body.description,
+    price: req.body.price,
+  };
+  var sql = "INSERT INTO products SET ?";
+  db.query(sql, inputData, function (err, data) {
+    if (err) throw err;
+  });
+  res.redirect("/admin/products");
 }
 
 function getUpdateProduct(req, res) {
-    console.log(3);
-    productId = req.params.id;
-    var sql = "SELECT * FROM products WHERE id = ? ";
-    db.query(sql, productId, function (err, data, fields) {
-        if (err) throw err;
-        else if (data.length > 0) {
-            res.render("admin/product/update-product", {
-                product: data[0],
-            });
-        } else {
-            res.render("shared/404");
-        }
-    });
+  console.log(3);
+  productId = req.params.id;
+  var sql = "SELECT * FROM products WHERE id = ? ";
+  db.query(sql, productId, function (err, data, fields) {
+    if (err) throw err;
+    else if (data.length > 0) {
+      res.render("admin/product/update-product", {
+        product: data[0],
+      });
+    } else {
+      res.render("shared/404");
+    }
+  });
 }
 
 function updateProduct(req, res) {
-    const imageUrl = "/products/assets/images/" + req.file.filename;
+  const imageUrl = "/products/assets/images/" + req.file.filename;
 
-    inputData = {
-        title: req.body.title,
-        image: req.file,
-        path: imageUrl,
-        summary: req.body.summary,
-        description: req.body.description,
-        price: req.body.price,
-    };
+  inputData = {
+    admin_id: res.locals.admin_id,
+    title: req.body.title,
+    image: req.file,
+    path: imageUrl,
+    summary: req.body.summary,
+    description: req.body.description,
+    price: req.body.price,
+  };
 
-    const productId = req.params.id;
-    console.log(productId);
+  const productId = req.params.id;
+  console.log(productId);
 
-    var sql = "SELECT * FROM products WHERE id = ? ";
-    db.query(sql, productId, function (err, data, fields) {
+  var sql = "SELECT * FROM products WHERE id = ? ";
+  db.query(sql, productId, function (err, data, fields) {
+    if (err) throw err;
+    else if (data.length > 0) {
+      const sql2 = "UPDATE products SET ? WHERE id = ?";
+
+      db.query(sql2, [inputData, productId], function (err, data) {
         if (err) throw err;
-        else if (data.length > 0) {
-            const sql2 = "UPDATE products SET ? WHERE id = ?";
+      });
 
-            db.query(sql2, [inputData, productId], function (err, data) {
-                if (err) throw err;
-            });
-
-            res.redirect("/admin/products");
-        } else {
-            res.render("shared/404");
-        }
-    });
+      res.redirect("/admin/products");
+    } else {
+      res.render("shared/404");
+    }
+  });
 }
 
 function deleteProduct(req, res) {
-    console.log(5);
-    productId = req.params.id;
-    var sql = "DELETE FROM products WHERE id = ? ";
-    db.query(sql, productId, function (err, data, fields) {
-        console.log(data);
-        if (err) throw err;
-        else if (data.affectedRows > 0) {
-            res.json({
-                message: "Deleted product!",
-            });
-        } else {
-            // res.render('admin/product/all-products', {
-            //     alertMsg: "Record Successfully deleted"
-            // });
+  console.log(5);
+  productId = req.params.id;
+  var sql = "DELETE FROM products WHERE id = ? ";
+  db.query(sql, productId, function (err, data, fields) {
+    console.log(data);
+    if (err) throw err;
+    else if (data.affectedRows > 0) {
+      res.json({
+        message: "Deleted product!",
+      });
+    } else {
+      // res.render('admin/product/all-products', {
+      //     alertMsg: "Record Successfully deleted"
+      // });
 
-            // res.render('admin/product/all-products', {
-            //     alertMsg: "No Record Found!!"
-            // });
+      // res.render('admin/product/all-products', {
+      //     alertMsg: "No Record Found!!"
+      // });
 
-            res.redirect("/admin/products");
-        }
-    });
+      res.redirect("/admin/products");
+    }
+  });
 }
 
 async function getOrders(req, res, next) {
-    try {
-        const orders = await Order.findAll();
-        res.render("admin/orders/admin-orders", {
-            orders: orders,
-        });
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const orders = await Order.findAll();
+    res.render("admin/orders/admin-orders", {
+      orders: orders,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function updateOrder(req, res, next) {
-    const orderId = req.params.id;
-    const newStatus = req.body.newStatus;
+  const orderId = req.params.id;
+  const newStatus = req.body.newStatus;
 
-    try {
-        const order = await Order.findById(orderId);
+  try {
+    const order = await Order.findById(orderId);
 
-        order.status = newStatus;
+    order.status = newStatus;
 
-        await order.save();
+    await order.save();
 
-        res.json({ message: "Order updated", newStatus: newStatus });
-    } catch (error) {
-        next(error);
-    }
+    res.json({ message: "Order updated", newStatus: newStatus });
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {
-    getLogin: getLogin,
-    login: login,
-    logout: logout,
-    getProduct: getProduct,
-    getNewProduct: getNewProduct,
-    createNewProduct: createNewProduct,
-    getUpdateProduct: getUpdateProduct,
-    updateProduct: updateProduct,
-    deleteProduct: deleteProduct,
-    getOrders: getOrders,
-    updateOrder: updateOrder,
+  getLogin: getLogin,
+  login: login,
+  logout: logout,
+  getProduct: getProduct,
+  getNewProduct: getNewProduct,
+  createNewProduct: createNewProduct,
+  getUpdateProduct: getUpdateProduct,
+  updateProduct: updateProduct,
+  deleteProduct: deleteProduct,
+  getOrders: getOrders,
+  updateOrder: updateOrder,
 };

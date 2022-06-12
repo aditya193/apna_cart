@@ -31,15 +31,16 @@ npm install uuid
 
 creating products tables
 CREATE TABLE `online-shop`.`products` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(45) NOT NULL,
-    `image` BLOB,
-    `path` TEXT NOT NULL,
-    `summary` VARCHAR(255) NOT NULL,
-    `description` TEXT NOT NULL,
-    `price` INT NOT NULL,
-    `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`));
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `admin_id` INT NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `image` BLOB,
+  `path` TEXT NOT NULL,
+  `summary` VARCHAR(255) NOT NULL,
+  `description` TEXT NOT NULL,
+  `price` INT NOT NULL,
+  `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));
 
     <img src = "data:image/png;base64,' . base64_encode($row['product_image']) . '" width = "50px" height = "50px"/>
 
@@ -56,6 +57,7 @@ CREATE TABLE `online-shop`.`products` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `product_id` INT NOT NULL,
+    `admin_id` INT NOT NULL,
     `quantity` INT NOT NULL,
     `is_pending` TINYINT NOT NULL,
     `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
