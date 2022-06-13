@@ -1,38 +1,21 @@
 <article class="order-item">
-    <header class="order-summary">
-      <h2><span class="order-item-price">$<%= order.price.toFixed(2) %></span> - <%= order.date %></h2>
-      <% if(order.status){ %>
-        <p><span class="badge">Pending</span></p>
-      <% } else{ %>  
+  <header class="order-summary">
+    <h2><span class="order-item-price">₹<%= order.price %></span> - <%= order.date %>
+    </h2>
+    <% if(order.status){ %>
+      <p><span class="badge">Pending</span></p>
+      <% } else{ %>
         <p><span class="badge">Delivered</span></p>
-     <% } %>
-    </header>
-  
-    <section class="order-details">
-      <!-- <% if (locals.isAdmin) { %>
-        <address>
-          <p><a href="mailto:<%= order.userData.email %>"><%= order.userData.name %></a></p>
-          <p><%= order.userData.address.street %> (<%= order.userData.address.postalCode %> <%= order.userData.address.city %>)</p>
-        </address>
-      <% } %> -->
-      <ul>
-          <li><%= order.title %> - $<%= order.price.toFixed(2) %> (<%= order.quantity %>)</li>
-          <img src="<%= order.path %>" alt="<%= order.title %>">
-      </ul>
-    </section>
-  
-    <!-- <% if (locals.isAdmin) { %>
-      <section class="order-actions">
-        <form>
-          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-          <input type="hidden" name="orderid" value="<%= order.id %>">
-          <select name="status">
-            <option value="pending" <% if (order.status === 'pending') { %>selected<% } %>>Pending</option>
-            <option value="fulfilled" <% if (order.status === 'fulfilled') { %>selected<% } %>>Fulfilled</option>
-            <option value="cancelled" <% if (order.status === 'cancelled') { %>selected<% } %>>Cancelled</option>
-          </select>
-          <button class="btn btn-alt">Update</button>
-        </form>
-      </section>
-    <% } %> -->
-  </article>
+        <% } %>
+  </header>
+
+  <section class="order-details">
+    <ul>
+      <li>
+        <%= order.title %> - ₹<%= order.price %> (₹<%= order.price/order.quantity %> x <%= order.quantity %>)
+      </li>
+      <img src="<%= order.path %>" alt="<%= order.title %>">
+    </ul>
+  </section>
+
+</article>

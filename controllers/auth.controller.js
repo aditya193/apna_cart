@@ -19,7 +19,7 @@ exports.login = async (req, res, next) => {
             req.session.isAuth = true;
             req.session.isAdmin = false;
             req.session.user_id = data[0].id;
-            console.log(req.session.id);
+            // console.log(req.session.id);
             req.session.save();
             console.log("congrats logged in!");
             res.redirect("/");

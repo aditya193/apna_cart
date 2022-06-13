@@ -1,0 +1,7 @@
+<ol>
+  <% for (var order=0;order<user_details.length;order++) { %>
+    <li>
+      <%- include('admin-order-item', { user_detail:user_details[order],product_detail:product_details[order]}) %>
+    </li>
+    <% } %>
+</ol>

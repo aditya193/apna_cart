@@ -5,6 +5,7 @@
 <body>
   <%- include('../../shared/includes/header') %>
   <main>
-    <%- include('../../shared/includes/order-list') %>
+    <%- include('../../shared/includes/admin-order-list',{user_details: user_details,
+      product_details: product_details}) %>
   </main>
 </body>

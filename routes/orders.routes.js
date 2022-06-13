@@ -10,6 +10,6 @@ router.post("/orders", ordersController.addOrder);
 
 router.get("/manageOrder", ordersController.manageOrder);
 
-router.get("/updateStatus/:order_id", ordersController.updateStatus);
+router.post("/updateStatus/:order_id", ordersController.updateStatus);
 
 module.exports = router;

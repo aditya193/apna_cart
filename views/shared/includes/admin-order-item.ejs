@@ -1,0 +1,48 @@
+<article class="order-item">
+    <header class="order-summary">
+        <h2>
+            <span class="order-item-price">₹<%= product_detail.price*product_detail.quantity %></span>
+            - <%= product_detail.date %>
+        </h2>
+        <% if(product_detail.status){ %>
+            <p><span class="badge">Pending</span></p>
+            <% } else{ %>
+                <p><span class="badge">Delivered</span></p>
+                <% } %>
+    </header>
+
+    <section class="order-details">
+        <address>
+            <p>
+                <a href="mailto:<%= user_detail.user_email %>">
+                    <%= user_detail.user_name %>
+                </a>
+            </p>
+            <p>
+                <%= user_detail.user_address %> (<%= user_detail.user_pincode %>
+                        <%=user_detail.user_city %>
+                            <%=user_detail.user_state %>)
+            </p>
+        </address>
+        <ul>
+            <li>
+                <%= product_detail.product_title %> - ₹<%= product_detail.price*product_detail.quantity %> (₹<%=
+                            product_detail.price %> x <%= product_detail.quantity %>)
+            </li>
+            <img src="<%= product_detail.product_path %>" alt="<%= product_detail.title %>" />
+        </ul>
+    </section>
+
+    <%if(product_detail.status===1){ %>
+        <section class="order-actions">
+            <form action="/updateStatus/<%=product_detail.order_id%>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+                <select name="status_value">
+                    <option value="1">Pending</option>
+                    <option value="0">Fulfilled</option>
+                </select>
+                <button class="btn btn-alt">Update</button>
+            </form>
+        </section>
+        <% } %>
+</article>
