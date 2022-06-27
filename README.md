@@ -3,7 +3,7 @@
 <h3>About Project: </h3>
 <ul>
   <li>Apna Cart is an E-commerce Website</li>
-  <li>Webite Faciliates two type of users Admin and Customer, their roles are:
+  <li>Website Faciliates two type of users Admin and Customer, their roles are:
     <ul>
       <li><b>Admin:</b>
         <ol>
