@@ -15,12 +15,6 @@ under scripts, define "start" key and its value is "nodemon app.js"
 In Terminal $ npm start
 Our server will be start running
 
-mailgun_password: $08$cW1l8hUM/tyRdkr47mxNAuMC8OBMnDknfYst6GqWeVtLlm7cviqIG
-
-shop-email:
-email:apnacart23@gmail.com
-password:Apnacart2022!
-
 storing session in databse
 
 while Login check if user is already logged in with the help of sessions
@@ -62,3 +56,17 @@ CREATE TABLE `online-shop`.`products` (
     `is_pending` TINYINT NOT NULL,
     `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`));
+
+    CREATE TABLE `users` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `name` varchar(225) NOT NULL,
+      `email` varchar(255) NOT NULL,
+      `password` varchar(255) DEFAULT NULL,
+      `contact` varchar(255) NOT NULL,
+      `address` text,
+      `pincode` varchar(45) DEFAULT NULL,
+      `city` varchar(45) DEFAULT NULL,
+      `state` varchar(255) DEFAULT NULL,
+      `date` datetime DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (`id`)
+    )
