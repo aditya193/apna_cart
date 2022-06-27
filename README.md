@@ -49,7 +49,7 @@
   <h3>Code and Database Structure:</h3>
   <ul>
   <li>The Website is based on MVC Pattern.</li>
-  <li>The Databse Contains four Tables
+  <li>The Database Contains four Tables
     <ol>
       <li><b>users: </b>Primary key is <i>id</i></li>
       <li><b>products: </b>Primary key is <i>id</i></li>
