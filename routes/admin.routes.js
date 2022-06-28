@@ -31,8 +31,4 @@ router.post(
 
 router.delete("/admin/products/:id", adminController.deleteProduct);
 
-router.get("/admin/orders", adminController.getOrders);
-
-router.patch("/admin/orders/:id", adminController.updateOrder);
-
 module.exports = router;

@@ -15,7 +15,7 @@
       <li><b>Customer: </b>
         <ol>
           <li>Customer is Buyer who can buy the products</li>
-          <li>Customer can buy multiple products as well as products of multile seller</li>
+          <li>Customer can buy multiple products as well as products of multiple seller</li>
           <li>Customer can add product into the cart</li>
           <li>Customer can place the order of items that were added to the cart</li>
           <li>Customer can also track their orders</li>
@@ -23,10 +23,10 @@
       </li>
     </ul>
   </li>
-  <li>Registration of Admins are done manually</li>
+  <li>Registration of Admins is done manually</li>
   <li>User can register from the website</li>
   <li>Password is hashed before storing into the database</li>
-  <li>Password validation is also there
+  <li>Password validation is also there</li>
     <ul>
       <li>Password length must be atleast 8</li>
       <li>Password must contain atleast one digit from 0-9</li>
@@ -36,7 +36,7 @@
     </ul>
   </li>
   <li>Admin and customer can login with their correct email id and password</li>
-  <li>once they logged in their session will be maintained till they logout from the website</li>
+  <li>Once they logged in their session will be maintained till they logout from the website</li>
   </ul>
   
   <h3>Technologies used: </h3>
@@ -54,7 +54,7 @@
       <li><b>users: </b>Primary key is <i>id</i></li>
       <li><b>products: </b>Primary key is <i>id</i></li>
       <li><b>admin: </b>Primary key is <i>adminId</i></li>
-      <li><b>orders: </b>Primary key is <i>id</i> and foriegn key are <i>user_id</i>, <i>product_id</i>, <i>admin_id</i></li>
+      <li><b>orders: </b>Primary key is <i>id</i> and foreign key are <i>user_id</i>, <i>product_id</i>, <i>admin_id</i></li>
     </ol>
   </li>
   </ul>
@@ -62,8 +62,9 @@
   <h3>Installation: </h3>
   <ul>
     <li>Clone or Download the Project in zip format</li>
-    <li>go through the comments.txt file to setup a database by creating schemas and installing node modules</li>
-    <li>connect databse to project by enetring your database local server credentials</li>
+    <li>Go through the comments.txt file to setup database and create schemas</li>
+    <li>Connect database to project by entering your database local server credentials</li>
+    <li>Install node packages by running npm install command on terminal</li>
     <li>Open terminal and type npm start</li>
-    <li>open browser and type localhost:3000</li>
+    <li>Open browser and type localhost:3000</li>
   </ul>
