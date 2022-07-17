@@ -7,9 +7,9 @@
     <ul>
       <li><b>Admin:</b>
         <ol>
-          <li>Admin is Seller, who can sell products, add his or her products and manage orders of their products</li>
-          <li>Admin can track order and change the status of order as well</li>
-          <li>Admin can delete the Product, if he or she wants</li>
+          <li>Admin is Seller, who can sell products and manage orders of their products</li>
+          <li>Admin can track orders and can change the status of orders as well</li>
+          <li>Admin can delete a Product</li>
         </ol>
       </li>
       <li><b>Customer: </b>
@@ -68,3 +68,8 @@
     <li>Open terminal and type npm start</li>
     <li>Open browser and type localhost:3000</li>
   </ul>
+  
+  <h3>ER Diagram: </h3>
+  
+  ![apna_cart_ER_diagram](https://user-images.githubusercontent.com/62331631/179382919-f29d5867-8df3-453f-8d3f-1d8145fa683d.png)
+
